@@ -4,9 +4,11 @@ import (
 	"context"
 	"database/sql"
 	"encoding/json"
+	"fmt"
 	"io"
 	"net/http"
 	"net/http/httptest"
+	"os"
 	"strings"
 	"testing"
 	"time"
@@ -25,7 +27,12 @@ import (
 )
 
 func setupDBTest() *sql.DB {
-	db, err := sql.Open("mysql", "root:root@tcp(localhost:3306)/olshop_proto_test?parseTime=true")
+	user := os.Getenv("USERNAME")
+	pass := os.Getenv("PASSWORD")
+	host := os.Getenv("HOST")
+	port := os.Getenv("PORT")
+
+	db, err := sql.Open("mysql", fmt.Sprintf("%s:%s@tcp(%s:%s)/olshop_proto_test?parseTime=true", user, pass, host, port))
 	helper.PanicIfError(err)
 
 	db.SetMaxIdleConns(5)
