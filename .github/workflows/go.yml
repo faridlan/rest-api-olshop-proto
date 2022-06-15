@@ -37,4 +37,4 @@ jobs:
       uses: docker/build-push-action@v3
       with:
         push: true
-        tags: docker push nulhakim/olshop-proto:latest
+        tags: nulhakim/olshop-proto:latest
