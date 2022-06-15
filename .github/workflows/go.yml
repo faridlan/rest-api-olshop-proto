@@ -40,7 +40,7 @@ jobs:
       uses: docker/build-push-action@v3
       with:
         push: true
-        tags: $(echo $IMAGE):$(echo $GITHUB_SHA | head -c7)
+        tags: $(echo $IMAGE):1.0.2
 
   # deploy_do:
   #   runs-on: ubuntu-latest
