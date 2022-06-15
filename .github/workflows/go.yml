@@ -9,6 +9,11 @@ on:
 jobs:
 
   build:
+    env:
+      USERNAME: ${{secrets.USERNAME}}
+      PASSWORD: ${{secrets.PASSWORD}}
+      HOST: ${{secrets.HOST}}
+      PORT: ${{secrets.PORT}}
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
