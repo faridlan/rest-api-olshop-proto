@@ -12,7 +12,10 @@ env:
   HOST: ${{secrets.HOST}}
   PORT: ${{secrets.PORT}}
   DB: ${{secrets.DB}}
+  SPACES_KEY: ${{secrets.SPACES_KEY}}
+  SPACES_SECRET: ${{secrets.SPACES_SECRET}}
   IMAGE: nulhakim/olshop-proto
+  IMAGE_NAME: olshop
 
 jobs:
 
@@ -39,20 +42,29 @@ jobs:
     - name: Build and push
       uses: docker/build-push-action@v3
       with:
-        envs: IMAGE
         push: true
-        tags: $(echo $IMAGE):1.0.2
+        tags: nulhakim/olshop-proto:1.0.2
 
-  # deploy_do:
-  #   runs-on: ubuntu-latest
-  #   needs: build
+  deploy_do:
+    runs-on: ubuntu-latest
+    needs: build
 
-  #   steps:
-  #     - name: Deploy to Digital Ocean droplet via SSH action
-  #       uses: appleboy/ssh-action@v0.1.3
-  #       with:
-  #         host: ${{ secrets.DO_HOST }}
-  #         username: ${{ secrets.DO_USERNAME }}
-  #         key: ${{ secrets.SSHKEY }}
-  #         passphrase: ${{ secrets.PASSPHRASE }}
-      
+    steps:
+      - name: Deploy to Digital Ocean droplet via SSH action
+        uses: appleboy/ssh-action@v0.1.3
+        with:
+          host: ${{ secrets.DO_HOST }}
+          username: ${{ secrets.DO_USERNAME }}
+          key: ${{ secrets.SSHKEY }}
+          passphrase: ${{ secrets.PASSPHRASE }}
+          envs: IMAGE_NAME,SPACES_KEY,SPACES_SECRET,USERNAME,PASSWORD,PORT,HOST,DB,${{ secrets.DOCKERHUB_USERNAME }},${{ secrets.DOCKERHUB_TOKEN }}
+          script: |
+            docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
+            docker container stop $(echo $IMAGE_NAME)
+            docker container rm $(echo $IMAGE_NAME)
+            docker run -d \
+            --restart always \
+            --name $(echo $IMAGE_NAME) \
+            -e SPACES_KEY=$(echo $SPACES_KEY) -e SPACES_SECRET=$(echo $SPACES_SECRET) \ 
+            -e USERNAME=$(echo $USERNAME) -e PASSWORD=$(echo $PASSWORD) -e PORT=$(echo $PORT) -e HOST=$(echo $HOST) -e DB=$(echo $DB) \
+            -p 3000:3000 nulhakim/olshop-proto:1.0.2
