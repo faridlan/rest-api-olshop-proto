@@ -39,6 +39,7 @@ jobs:
     - name: Build and push
       uses: docker/build-push-action@v3
       with:
+        envs: IMAGE
         push: true
         tags: $(echo $IMAGE):1.0.2
 
