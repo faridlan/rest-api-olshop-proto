@@ -58,4 +58,4 @@ jobs:
           password: ${{ secrets.PASSPHRASE }}
           envs: IMAGE_NAME,SPACES_KEY,SPACES_SECRET,USERNAME,PASSWORD,PORT,HOST,DB,${{ secrets.DOCKERHUB_USERNAME }},${{ secrets.DOCKERHUB_TOKEN }}
           script: |
-            docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
+            docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin ${{ secrets.DOCKERHUB_TOKEN }}
