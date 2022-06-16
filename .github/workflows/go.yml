@@ -7,13 +7,13 @@ on:
     branches: [ "main" ]
 
 env:
-  # USERNAME: ${{secrets.USERNAME}}
-  # PASSWORD: ${{secrets.PASSWORD}}
-  # HOST: ${{secrets.HOST}}
-  # PORT: ${{secrets.PORT}}
-  # DB: ${{secrets.DB}}
-  # SPACES_KEY: ${{secrets.SPACES_KEY}}
-  # SPACES_SECRET: ${{secrets.SPACES_SECRET}}
+  USERNAME: ${{secrets.USERNAME}}
+  PASSWORD: ${{secrets.PASSWORD}}
+  HOST: ${{secrets.HOST}}
+  PORT: ${{secrets.PORT}}
+  DB: ${{secrets.DB}}
+  SPACES_KEY: ${{secrets.SPACES_KEY}}
+  SPACES_SECRET: ${{secrets.SPACES_SECRET}}
   IMAGE: nulhakim/olshop-proto:1.0.2
   IMAGE_NAME: olshop-proto
 
@@ -57,7 +57,7 @@ jobs:
           username: ${{ secrets.DO_USERNAME }}
           key: ${{ secrets.SSHKEY }}
           password: ${{ secrets.PASSPHRASE }}
-          envs: IMAGE,IMAGE_NAME,SPACES_KEY,SPACES_SECRET,USERNAME,PASSWORD,PORT,HOST,DB,${{ secrets.DOCKERHUB_USERNAME }},${{ secrets.DOCKERHUB_TOKEN }}
+          envs: IMAGE,IMAGE_NAME,SPACES_KEY,SPACES_SECRET,USERNAME,PASSWORD,PORT,HOST,DB
           script: |
             docker create \
             --name $(echo $IMAGE_NAME) \
