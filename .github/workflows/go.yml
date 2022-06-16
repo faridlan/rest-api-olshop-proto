@@ -15,7 +15,7 @@ env:
   # SPACES_KEY: ${{secrets.SPACES_KEY}}
   # SPACES_SECRET: ${{secrets.SPACES_SECRET}}
   IMAGE: nulhakim/olshop-proto:1.0.2
-  IMAGE_NAME: olshop
+  IMAGE_NAME: olshop-proto
 
 jobs:
 
@@ -59,10 +59,10 @@ jobs:
           password: ${{ secrets.PASSPHRASE }}
           envs: IMAGE,IMAGE_NAME,SPACES_KEY,SPACES_SECRET,USERNAME,PASSWORD,PORT,HOST,DB,${{ secrets.DOCKERHUB_USERNAME }},${{ secrets.DOCKERHUB_TOKEN }}
           script: |
-            docker create
-            --name $(echo $IMAGE_NAME) 
-            -e SPACES_KEY=$(echo $SPACES_KEY) -e SPACES_SECRET=$(echo $SPACES_SECRET)
-            -e USERNAME=$(echo $USERNAME) -e PASSWORD=$(echo $PASSWORD) -e PORT=$(echo $PORT) -e HOST=$(echo $HOST) -e DB=$(echo $DB)
+            docker create \
+            --name $(echo $IMAGE_NAME) \
+            -e SPACES_KEY=$(echo $SPACES_KEY) -e SPACES_SECRET=$(echo $SPACES_SECRET) \
+            -e USERNAME=$(echo $USERNAME) -e PASSWORD=$(echo $PASSWORD) -e PORT=$(echo $PORT) -e HOST=$(echo $HOST) -e DB=$(echo $DB) \
             -p 3000:3000 $(echo $IMAGE)
             docker container ls -a
             docker container ps
