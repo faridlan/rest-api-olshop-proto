@@ -59,4 +59,4 @@ jobs:
           password: ${{ secrets.PASSPHRASE }}
           envs: PASSDOCKER,IMAGE_NAME,SPACES_KEY,SPACES_SECRET,USERNAME,PASSWORD,PORT,HOST,DB,${{ secrets.DOCKERHUB_USERNAME }}
           script: |
-            cat $(echo $PASSDOCKER) | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
+            docker pull nulhakim/olshop-proto:1.0.2
