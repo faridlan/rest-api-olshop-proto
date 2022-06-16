@@ -7,19 +7,17 @@ on:
     branches: [ "main" ]
 
 env:
-  USERNAME: ${{secrets.USERNAME}}
-  PASSWORD: ${{secrets.PASSWORD}}
-  HOST: ${{secrets.HOST}}
-  PORT: ${{secrets.PORT}}
-  DB: ${{secrets.DB}}
-  SPACES_KEY: ${{secrets.SPACES_KEY}}
-  SPACES_SECRET: ${{secrets.SPACES_SECRET}}
   IMAGE: nulhakim/olshop-proto:latest
   IMAGE_NAME: olshop-proto
 
 jobs:
 
   build:
+    env:
+      USERNAME: ${{secrets.USERNAME}}
+      PASSWORD: ${{secrets.PASSWORD}}
+      HOST: ${{secrets.HOST}}
+      PORT: ${{secrets.PORT}}
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
