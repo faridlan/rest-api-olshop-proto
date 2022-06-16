@@ -56,6 +56,5 @@ jobs:
           username: ${{ secrets.DO_USERNAME }}
           key: ${{ secrets.SSHKEY }}
           password: ${{ secrets.PASSPHRASE }}
-          envs: IMAGE_NAME,SPACES_KEY,SPACES_SECRET,USERNAME,PASSWORD,PORT,HOST,DB
           script: |
-            docker container ls -a \
+            docker container ls -a
