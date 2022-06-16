@@ -56,7 +56,7 @@ jobs:
           host: 159.223.72.43
           username: root
           key: ${{ secrets.SSHKEY }}
-          passphrase: ${{ secrets.PASSPHRASE }}
+          password: ${{ secrets.PASSPHRASE }}
           script: |
             docker container ls -a
             docker container ps
