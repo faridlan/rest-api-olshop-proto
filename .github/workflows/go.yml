@@ -14,7 +14,7 @@ env:
   # DB: ${{secrets.DB}}
   # SPACES_KEY: ${{secrets.SPACES_KEY}}
   # SPACES_SECRET: ${{secrets.SPACES_SECRET}}
-  # IMAGE: nulhakim/olshop-proto
+  IMAGE: nulhakim/olshop-proto
   IMAGE_NAME: olshop-proto
 
 jobs:
@@ -57,10 +57,15 @@ jobs:
           username: ${{ secrets.DO_USERNAME }}
           key: ${{ secrets.SSHKEY }}
           password: ${{ secrets.PASSPHRASE }}
-          envs: IMAGE_NAME,SPACES_KEY,SPACES_SECRET,USERNAME,PASSWORD,PORT,HOST,DB,${{ secrets.DOCKERHUB_USERNAME }},${{ secrets.DOCKERHUB_TOKEN }}
+          envs: IMAGE,IMAGE_NAME,SPACES_KEY,SPACES_SECRET,USERNAME,PASSWORD,PORT,HOST,DB,${{ secrets.DOCKERHUB_USERNAME }},${{ secrets.DOCKERHUB_TOKEN }}
           script: |
             docker container ls -a
             docker container ps
-            docker start $(echo $IMAGE_NAME)
+            docker stop $(echo $IMAGE_NAME)
             docker container ps
+            docker container ls -a
+            docker rm $(echo $IMAGE_NAME)
+            docker container ls -a
+            docker images
+            docker rm image $(echo $IMAGE)
             docker images
