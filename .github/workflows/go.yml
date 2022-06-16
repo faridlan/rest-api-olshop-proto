@@ -6,44 +6,44 @@ on:
   pull_request:
     branches: [ "main" ]
 
-env:
-  USERNAME: ${{secrets.USERNAME}}
-  PASSWORD: ${{secrets.PASSWORD}}
-  HOST: ${{secrets.HOST}}
-  PORT: ${{secrets.PORT}}
-  DB: ${{secrets.DB}}
-  SPACES_KEY: ${{secrets.SPACES_KEY}}
-  SPACES_SECRET: ${{secrets.SPACES_SECRET}}
-  IMAGE: nulhakim/olshop-proto
-  IMAGE_NAME: olshop
+# env:
+  # USERNAME: ${{secrets.USERNAME}}
+  # PASSWORD: ${{secrets.PASSWORD}}
+  # HOST: ${{secrets.HOST}}
+  # PORT: ${{secrets.PORT}}
+  # DB: ${{secrets.DB}}
+  # SPACES_KEY: ${{secrets.SPACES_KEY}}
+  # SPACES_SECRET: ${{secrets.SPACES_SECRET}}
+  # IMAGE: nulhakim/olshop-proto
+  # IMAGE_NAME: olshop
 
 jobs:
 
-  build:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v3
+  # build:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #   - uses: actions/checkout@v3
 
-    - name: Set up Go
-      uses: actions/setup-go@v3
-      with:
-        go-version: 1.17
+  #   - name: Set up Go
+  #     uses: actions/setup-go@v3
+  #     with:
+  #       go-version: 1.17
 
-    - name: Build
-      run: go build -v ./...
+  #   - name: Build
+  #     run: go build -v ./...
 
-    - name: Test
-      run: go test -v ./...
-    - name: Login to DockerHub
-      uses: docker/login-action@v2
-      with:
-        username: ${{ secrets.DOCKERHUB_USERNAME }}
-        password: ${{ secrets.DOCKERHUB_TOKEN }}
-    - name: Build and push
-      uses: docker/build-push-action@v3
-      with:
-        push: true
-        tags: nulhakim/olshop-proto:1.0.2
+  #   - name: Test
+  #     run: go test -v ./...
+  #   - name: Login to DockerHub
+  #     uses: docker/login-action@v2
+  #     with:
+  #       username: ${{ secrets.DOCKERHUB_USERNAME }}
+  #       password: ${{ secrets.DOCKERHUB_TOKEN }}
+  #   - name: Build and push
+  #     uses: docker/build-push-action@v3
+  #     with:
+  #       push: true
+  #       tags: nulhakim/olshop-proto:1.0.2
 
   deploy_do:
     runs-on: ubuntu-latest
@@ -53,9 +53,9 @@ jobs:
       - name: Deploy to Digital Ocean droplet via SSH action
         uses: appleboy/ssh-action@v0.1.3
         with:
-          host: ${{ secrets.DO_HOST }}
-          username: ${{ secrets.DO_USERNAME }}
+          host: 159.223.72.43
+          username: root
           key: ${{ secrets.SSHKEY }}
           passphrase: ${{ secrets.PASSPHRASE }}
           script: |
-            docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
+            docker container ls -a
