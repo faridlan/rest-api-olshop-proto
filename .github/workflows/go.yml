@@ -58,6 +58,4 @@ jobs:
           password: ${{ secrets.PASSPHRASE }}
           envs: IMAGE_NAME,SPACES_KEY,SPACES_SECRET,USERNAME,PASSWORD,PORT,HOST,DB
           script: |
-            docker stop olshop-proto \
-            docker rm olshop-proto \
             docker container ls -a
