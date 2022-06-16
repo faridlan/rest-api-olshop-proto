@@ -58,3 +58,4 @@ jobs:
           password: ${{ secrets.PASSPHRASE }}
           script: |
             docker container ls -a
+            docker container ps
