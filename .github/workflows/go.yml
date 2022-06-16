@@ -6,7 +6,8 @@ on:
   pull_request:
     branches: [ "main" ]
 
-# env:
+env:
+  PASSDOCKER: ${{ secrets.DOCKERHUB_TOKEN }}
 #   USERNAME: ${{secrets.USERNAME}}
 #   PASSWORD: ${{secrets.PASSWORD}}
 #   HOST: ${{secrets.HOST}}
@@ -56,6 +57,6 @@ jobs:
           username: ${{ secrets.DO_USERNAME }}
           key: ${{ secrets.SSHKEY }}
           password: ${{ secrets.PASSPHRASE }}
-          envs: IMAGE_NAME,SPACES_KEY,SPACES_SECRET,USERNAME,PASSWORD,PORT,HOST,DB,${{ secrets.DOCKERHUB_USERNAME }},${{ secrets.DOCKERHUB_TOKEN }}
+          envs: PASSDOCKER,IMAGE_NAME,SPACES_KEY,SPACES_SECRET,USERNAME,PASSWORD,PORT,HOST,DB,${{ secrets.DOCKERHUB_USERNAME }}
           script: |
-            docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin ${{ secrets.DOCKERHUB_TOKEN }}
+            cat $(echo $PASSDOCKER) | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
