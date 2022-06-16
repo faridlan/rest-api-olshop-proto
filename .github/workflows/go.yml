@@ -6,15 +6,16 @@ on:
   pull_request:
     branches: [ "main" ]
 
-env:
-  USERNAME: ${{secrets.USERNAME}}
-  PASSWORD: ${{secrets.PASSWORD}}
-  HOST: ${{secrets.HOST}}
-  PORT: ${{secrets.PORT}}
-  DB: ${{secrets.DB}}
-  SPACES_KEY: ${{secrets.SPACES_KEY}}
-  SPACES_SECRET: ${{secrets.SPACES_SECRET}}
-  IMAGE_NAME: olshop-proto
+# env:
+#   USERNAME: ${{secrets.USERNAME}}
+#   PASSWORD: ${{secrets.PASSWORD}}
+#   HOST: ${{secrets.HOST}}
+#   PORT: ${{secrets.PORT}}
+#   DB: ${{secrets.DB}}
+#   SPACES_KEY: ${{secrets.SPACES_KEY}}
+#   SPACES_SECRET: ${{secrets.SPACES_SECRET}}
+#   IMAGE: nulhakim/olshop-proto
+#   IMAGE_NAME: olshop
 
 jobs:
 
@@ -42,7 +43,7 @@ jobs:
   #     uses: docker/build-push-action@v3
   #     with:
   #       push: true
-  #       tags: nulhakim/olshop-proto:latest
+  #       tags: nulhakim/olshop-proto:1.0.2
 
   deploy_do:
     runs-on: ubuntu-latest
@@ -56,6 +57,6 @@ jobs:
           username: ${{ secrets.DO_USERNAME }}
           key: ${{ secrets.SSHKEY }}
           password: ${{ secrets.PASSPHRASE }}
+          envs: IMAGE_NAME,SPACES_KEY,SPACES_SECRET,USERNAME,PASSWORD,PORT,HOST,DB,${{ secrets.DOCKERHUB_USERNAME }},${{ secrets.DOCKERHUB_TOKEN }}
           script: |
-            docker container ls -a
-            docker container ps
+            docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
