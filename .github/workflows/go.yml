@@ -6,16 +6,16 @@ on:
   pull_request:
     branches: [ "main" ]
 
-# env:
-#   USERNAME: ${{secrets.USERNAME}}
-#   PASSWORD: ${{secrets.PASSWORD}}
-#   HOST: ${{secrets.HOST}}
-#   PORT: ${{secrets.PORT}}
-#   DB: ${{secrets.DB}}
-#   SPACES_KEY: ${{secrets.SPACES_KEY}}
-#   SPACES_SECRET: ${{secrets.SPACES_SECRET}}
-#   IMAGE: nulhakim/olshop-proto
-#   IMAGE_NAME: olshop
+env:
+  # USERNAME: ${{secrets.USERNAME}}
+  # PASSWORD: ${{secrets.PASSWORD}}
+  # HOST: ${{secrets.HOST}}
+  # PORT: ${{secrets.PORT}}
+  # DB: ${{secrets.DB}}
+  # SPACES_KEY: ${{secrets.SPACES_KEY}}
+  # SPACES_SECRET: ${{secrets.SPACES_SECRET}}
+  # IMAGE: nulhakim/olshop-proto
+  IMAGE_NAME: olshop-proto
 
 jobs:
 
@@ -61,3 +61,5 @@ jobs:
           script: |
             docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
             docker container ls -a
+            docker container ps
+            docker stop $(echo $IMAGE_NAME)
