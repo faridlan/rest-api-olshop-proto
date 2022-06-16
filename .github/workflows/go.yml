@@ -59,6 +59,7 @@ jobs:
           script: |
             docker container stop $(echo $IMAGE_NAME)
             docker container rm $(echo $IMAGE_NAME)
+            docker image rm $(echo $IMAGE)
             docker create \
             --name $(echo $IMAGE_NAME) \
             -e SPACES_KEY=${{secrets.SPACES_KEY}} -e SPACES_SECRET=${{secrets.SPACES_SECRET}} \
